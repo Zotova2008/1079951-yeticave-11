@@ -30,8 +30,9 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?= format_amount($item['price']); ?></span>
                         </div>
-                        <div class="lot__timer timer <?php if (get_time($item['date']) < $limit_time) : ?> timer--finishing <?php endif; ?>">
-                            <?= get_time($item['date']); ?>
+                        <?php $time_array = get_time($item['date']); ?>
+                        <div class="lot__timer timer <?php if ($time_array[0] < $limit_time) : ?>timer--finishing<?php endif; ?>">
+                            <?= ($time_array[0] . ' : ' . $time_array[1]); ?>
                         </div>
                     </div>
                 </div>
