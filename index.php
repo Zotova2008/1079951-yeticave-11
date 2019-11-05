@@ -47,13 +47,12 @@ $ads = [
 
 function format_amount($num)
 {
-    $num = ceil($num);
-    if ($num < 1000) {
-        return $num;
-    } elseif ($num >= 1000) {
-        $num = number_format($num, 0, '.', ' ');
+    $res = ceil($num);
+    if ($num >= 1000) {
+        $res = number_format($res, 0, '.', ' ');
+        $res .= ' ₽';
     }
-    return $num = $num . ' ₽';
+    return $res;
 };
 ?>
 <!DOCTYPE html>
