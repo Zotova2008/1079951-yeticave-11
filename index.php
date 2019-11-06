@@ -76,7 +76,7 @@ function get_time($time)
         $minutes = 0;
     }
 
-    return ($hours . ' : ' . $minutes);
+    return [$hours, $minutes];
 };
 
 $page_content = include_template('main.php', [

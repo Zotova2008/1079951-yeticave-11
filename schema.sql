@@ -1,0 +1,47 @@
+CREATE DATABASE yeticave
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_general_ci;
+
+USE yeti;
+
+CREATE TABLE categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(40) UNIQUE NOT NULL,
+  symbol VARCHAR(10) UNIQUE NOT NULL
+);
+
+CREATE TABLE lots (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  category_id INT UNSIGNED NOT NULL,
+  user_win_id INT UNSIGNED NOT NULL,
+  title VARCHAR(30) NOT NULL,
+  descript VARCHAR(250) NOT NULL,
+  img VARCHAR(250) NOT NULL,
+  starting_price INT UNSIGNED NOT NULL,
+  starting_date DATETIME NOT NULL,
+  ending_date DATETIME,
+  step INT UNSIGNED
+);
+
+CREATE TABLE bets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  lot_id INT UNSIGNED NOT NULL,
+  bet_time DATETIME,
+  bet INT UNSIGNED
+);
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  registr_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  email VARCHAR(128) UNIQUE NOT NULL,
+  user VARCHAR(128) NOT NULL,
+  password CHAR(64) NOT NULL,
+  contacts TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX email ON users(email);
+CREATE UNIQUE INDEX cat_symbol ON categories(symbol);
+CREATE UNIQUE INDEX cat_title ON categories(title);
+CREATE INDEX lot_title ON lots(title);
