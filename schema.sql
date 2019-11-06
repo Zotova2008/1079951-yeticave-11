@@ -1,16 +1,16 @@
-CREATE DATABASE yeticave
+CREATE DATABASE yeti
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
 
 USE yeti;
 
-CREATE TABLE categories (
+CREATE TABLE category (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(40) UNIQUE NOT NULL,
   symbol VARCHAR(10) UNIQUE NOT NULL
 );
 
-CREATE TABLE lots (
+CREATE TABLE lot (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT UNSIGNED NOT NULL,
   category_id INT UNSIGNED NOT NULL,
@@ -24,24 +24,24 @@ CREATE TABLE lots (
   step INT UNSIGNED
 );
 
-CREATE TABLE bets (
+CREATE TABLE bet (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT UNSIGNED NOT NULL,
   lot_id INT UNSIGNED NOT NULL,
   bet_time DATETIME,
-  bet INT UNSIGNED
+  bet_sum INT UNSIGNED
 );
 
-CREATE TABLE users (
+CREATE TABLE user_data (
   id INT AUTO_INCREMENT PRIMARY KEY,
   registr_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   email VARCHAR(128) UNIQUE NOT NULL,
   user VARCHAR(128) NOT NULL,
   password CHAR(64) NOT NULL,
-  contacts TEXT NOT NULL
+  contact TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX email ON users(email);
-CREATE UNIQUE INDEX cat_symbol ON categories(symbol);
-CREATE UNIQUE INDEX cat_title ON categories(title);
-CREATE INDEX lot_title ON lots(title);
+CREATE UNIQUE INDEX user_email ON user_data(email);
+CREATE UNIQUE INDEX cat_symbol ON category(symbol);
+CREATE UNIQUE INDEX cat_title ON category(title);
+CREATE INDEX lot_title ON lot(title);
