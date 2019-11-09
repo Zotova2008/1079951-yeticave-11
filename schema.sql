@@ -1,47 +1,47 @@
 CREATE DATABASE yeti
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_general_ci;
-
 USE yeti;
 
 CREATE TABLE category (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(40) UNIQUE NOT NULL,
-  symbol VARCHAR(10) UNIQUE NOT NULL
+  category_name VARCHAR (250) UNIQUE NOT NULL,
+  symbol_cat VARCHAR (100) UNIQUE NOT NULL
 );
 
 CREATE TABLE lot (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT UNSIGNED NOT NULL,
-  category_id INT UNSIGNED NOT NULL,
-  user_win_id INT UNSIGNED NOT NULL,
-  title VARCHAR(30) NOT NULL,
-  descript VARCHAR(250) NOT NULL,
-  img VARCHAR(250) NOT NULL,
-  starting_price INT UNSIGNED NOT NULL,
-  starting_date DATETIME NOT NULL,
-  ending_date DATETIME,
-  step INT UNSIGNED
+  lot_title VARCHAR(250) NOT NULL,
+  lot_descript TEXT,
+  lot_img VARCHAR(250),
+  lot_price INT UNSIGNED NOT NULL,
+  lot_step INT UNSIGNED,
+  date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  date_final TIMESTAMP,
+  id_category INT UNSIGNED NOT NULL,
+  id_user INT UNSIGNED NOT NULL,
+  id_user_winner INT UNSIGNED
 );
 
 CREATE TABLE bet (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT UNSIGNED NOT NULL,
-  lot_id INT UNSIGNED NOT NULL,
-  bet_time DATETIME,
-  bet_sum INT UNSIGNED
+  id_user INT UNSIGNED NOT NULL,
+  id_lot INT UNSIGNED NOT NULL,
+  bet_sum INT UNSIGNED,
+  bet_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE user_data (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  registr_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  email VARCHAR(128) UNIQUE NOT NULL,
-  user VARCHAR(128) NOT NULL,
-  password CHAR(64) NOT NULL,
-  contact TEXT NOT NULL
+  user_name VARCHAR(128) UNIQUE NOT NULL,
+  user_password CHAR(64) NOT NULL,
+  user_email VARCHAR(128) UNIQUE NOT NULL,
+  user_contact TEXT NOT NULL,
+  date_registr TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE UNIQUE INDEX user_email ON user_data(email);
-CREATE UNIQUE INDEX cat_symbol ON category(symbol);
-CREATE UNIQUE INDEX cat_title ON category(title);
-CREATE INDEX lot_title ON lot(title);
+CREATE UNIQUE INDEX user_name ON user_data(user_name);
+CREATE UNIQUE INDEX user_email ON user_data(user_email);
+CREATE UNIQUE INDEX symbol_cat ON category(symbol_cat);
+CREATE UNIQUE INDEX category ON category(category_name);
+CREATE INDEX lot_title ON lot(lot_title);
