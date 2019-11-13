@@ -19,14 +19,14 @@ VALUES
 
 /* Добавляем список объявлений */
 INSERT INTO lot
-(lot_title, lot_descript, lot_img, lot_price, lot_step, date_creation, id_category, id_user)
+(lot_title, lot_descript, lot_img, lot_price, lot_step, date_creation, data_final, id_category, id_user)
 VALUES
-  ('2014 Rossignol District Snowboard', 'Сноуборд Rossignol District 2019 года выпуска', 'img/lot-1.jpg', 10999, 1000, '2019-10-05 16:00:55', 1, 1),
-  ('DC Ply Mens 2016/2017 Snowboard', 'Сноуборд DC Ply Mens победа на соревнованиях 2016/2017 вам обеспечена', 'img/lot-2.jpg', 159999, 10000, '2019-10-10 10:00:00', 1, 1),
-  ('Крепления Union Contact Pro 2015 года размер L/XL', 'Крепления фирмы Union Contact Pro 2015 года, есть только размер L/XL', 'img/lot-3.jpg', 8000, 1000, '2019-11-01 12:00:00', 2, 2),
-  ('Ботинки для сноуборда DC Mutiny Charocal', 'К сноуборду нужно преобрести ботинки фирмы DC Mutiny Charocal', 'img/lot-4.jpg', 10999, 1000, '2019-11-05 13:00:00', 3, 2),
-  ('Куртка для сноуборда DC Mutiny Charocal', 'В куртке Charocal вы не замерзнете даже при +30', 'img/lot-5.jpg', 7500, 500, '2019-10-30 10:00:00', 4, 3),
-  ('Маска Oakley Canopy', 'Маска защитит вас от комаров, мух и всяких летающих и ползающих паразитов', 'img/lot-6.jpg', 5400, 200, '2019-11-07 15:00:00', 6, 3);
+  ('2014 Rossignol District Snowboard', 'Сноуборд Rossignol District 2019 года выпуска', 'img/lot-1.jpg', 10999, 1000, '2019-10-05 16:00:55', '2019-11-30 12:00:55', 1, 1),
+  ('DC Ply Mens 2016/2017 Snowboard', 'Сноуборд DC Ply Mens победа на соревнованиях 2016/2017 вам обеспечена', 'img/lot-2.jpg', 159999, 10000, '2019-10-10 10:00:00', '2019-11-29 12:00:55', 1, 1),
+  ('Крепления Union Contact Pro 2015 года размер L/XL', 'Крепления фирмы Union Contact Pro 2015 года, есть только размер L/XL', 'img/lot-3.jpg', 8000, 1000, '2019-11-01 12:00:00', '2019-11-25 12:00:55', 2, 2),
+  ('Ботинки для сноуборда DC Mutiny Charocal', 'К сноуборду нужно преобрести ботинки фирмы DC Mutiny Charocal', 'img/lot-4.jpg', 10999, 1000, '2019-11-05 13:00:00', '2019-11-27 12:00:55', 3, 2),
+  ('Куртка для сноуборда DC Mutiny Charocal', 'В куртке Charocal вы не замерзнете даже при +30', 'img/lot-5.jpg', 7500, 500, '2019-10-30 10:00:00', '2019-11-28 12:00:55', 4, 3),
+  ('Маска Oakley Canopy', 'Маска защитит вас от комаров, мух и всяких летающих и ползающих паразитов', 'img/lot-6.jpg', 5400, 200, '2019-11-07 15:00:00', '2019-11-26 12:00:55', 6, 3);
 
 /* Добавляем ставки для существующих объявлений */
 INSERT INTO bet
@@ -62,4 +62,3 @@ WHERE id = 1;
 SELECT * FROM bet
   INNER JOIN lot ON bet.id_lot = lot.id
 WHERE lot.id = 3 ORDER BY bet.bet_time DESC;
-
