@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $title; ?></title>
+    <title><?= $page_title; ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -55,9 +55,9 @@
         <nav class="nav">
             <ul class="nav__list container">
 
-                <?php foreach ($categories as $value) : ?>
+                <?php foreach ($category as $value) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?= $value; ?></a>
+                        <a href="pages/all-lots.html"><?= $value['category_name']; ?></a>
                     </li>
                 <?php endforeach; ?>
 
