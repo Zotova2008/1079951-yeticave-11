@@ -11,8 +11,6 @@ $limit_time = 1;
 $con = mysqli_connect('localhost', 'root', '', 'yeti');
 if (!$con) {
     print('Ошибка подключения к базе данных: ' . mysqli_connect_error());
-} else {
-    print('Соединение установлено');
 }
 
 // Устанавливаем кодировку

@@ -12,7 +12,7 @@ if ($result_cat) {
 }
 
 // Отправляем запрос на получение карточек лотов
-$sql_lot = 'SELECT lot.lot_title, lot.lot_img, lot.lot_price, lot.date_creation, lot.date_final, cat.category_name FROM lot JOIN category cat ON lot.id_category = cat.id ORDER BY lot.date_creation DESC';
+$sql_lot = 'SELECT lot.id, lot.lot_title, lot.lot_img, lot.lot_price, lot.date_creation, lot.date_final, cat.category_name FROM lot JOIN category cat ON lot.id_category = cat.id ORDER BY lot.date_creation DESC';
 $result_lot = mysqli_query($con, $sql_lot);
 // Проверяем получены ли данные
 if ($result_lot) {
