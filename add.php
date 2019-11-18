@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if (in_array($key, $required) && empty($value)) {
-            $errors[$key] = "Поле $fields[$key] надо заполнить";
+            $errors[$key] = "$fields[$key] надо заполнить";
         }
     }
 
@@ -87,20 +87,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors)) {
         $page_content = include_template('add-lot.php', ['lot' => $lot, 'errors' => $errors, 'category' => $category]);
     } else {
-        $sql = 'INSERT INTO lot (lot_title, lot_descript, id_category, date_final, lot_price, lot_step, lot_img, date_creation, id_user, id_user_winner) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 1, 2)';
+        $sql = 'INSERT INTO lot (lot_title, lot_descript, id_category, date_final, lot_price, lot_step, lot_img, date_creation, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 1)';
+        echo json_encode($lot);
+        echo json_encode($sql);
         $stmt = db_get_prepare_stmt($con, $sql, $lot);
+        echo json_encode($stmt);
         $res = mysqli_stmt_execute($stmt);
-        $lot_id = mysqli_insert_id($con);
-        // $res = mysqli_query($con, $sql);
-        // echo json_encode($lot_id);
-        // echo json_encode($res);
+        echo json_encode($res);
         if ($res) {
+            $lot_id = mysqli_insert_id($con);
             header("Location: lot.php?id=" . $lot_id);
         }
     }
+} else {
+    $page_content = include_template('add-lot.php', ['category' => $category]);
 }
-$page_content = include_template('add-lot.php', ['category' => $category]);
-
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
