@@ -19,8 +19,7 @@ if (!isset($_GET['id'])) {
     $sql_lot = 'SELECT lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_final, cat.category_name FROM lot
 	LEFT JOIN category cat ON lot.id_category = cat.id
 	LEFT JOIN bet ON lot.id = bet.id_lot
-	WHERE lot.id = ?
-	GROUP BY lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_final, cat.category_name';
+	WHERE lot.id = ?';
 
     $stmt_lot = db_get_prepare_stmt($con, $sql_lot, [$_GET['id']]);
     mysqli_stmt_execute($stmt_lot);
