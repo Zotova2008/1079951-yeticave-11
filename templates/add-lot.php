@@ -1,9 +1,9 @@
 <main>
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($category as $category) : ?>
+            <?php foreach ($category as $cat) : ?>
                 <li class="nav__item">
-                    <a href="all-lots.html"><?= $category['category_name']; ?></a>
+                    <a href="all-lots.html"><?= $cat['category_name']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -25,8 +25,9 @@
             <div class="form__item <?= $classname; ?>">
                 <label for="category">Категория <sup>*</sup></label>
                 <select id="category" name="category-id">
-                    <?php foreach ($category as $category) : ?>
-                        <option value="<?= $cat['id'] ?>" <?php if ($category['id'] == getPostVal('category-id')) : ?>selected<?php endif; ?>><?= $category['category_name']; ?></option>
+                    <option>Выберите категорию</option>
+                    <?php foreach ($category as $cat) : ?>
+                        <option value="<?= $cat['id'] ?>" <?php if ($cat['id'] == getPostVal('category-id')) : ?>selected<?php endif; ?>><?= $cat['category_name']; ?></option>
                     <?php endforeach; ?>
                 </select>
                 <?php if ($classname) : ?>

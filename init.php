@@ -1,7 +1,7 @@
 <?php
 require_once('helpers.php');
 
-$is_auth = rand(0, 1);
+$is_auth = 1;
 $user_name = 'Наталья Зотова'; // укажите здесь ваше имя
 $page_title = 'YetiCave | Home';
 $cat_index = 0;

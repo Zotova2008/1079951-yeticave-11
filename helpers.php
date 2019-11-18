@@ -180,7 +180,7 @@ function getPostVal($name)
 function validateCategory($id, $allowed_list)
 {
     if (!in_array($id, $allowed_list)) {
-        return "Указана несуществующая категория";
+        return "Выберите категорию";
     }
 
     return null;
@@ -221,18 +221,4 @@ function validateDate($value)
         return "Дата должна быть на один день больше текущей даты, а также должна быть в формате ГГГГ-ММ-ДД";
     }
     return null;
-}
-
-function validatePostData($form, $rules, $required, $fields)
-{
-    foreach ($form as $key => $value) {
-        if (isset($rules[$key])) {
-            $rule = $rules[$key];
-            $errors[$key] = $rule($value);
-        }
-        if (in_array($key, $required) && empty($value)) {
-            $errors[$key] = "Поле $fields[$key] надо заполнить";
-        }
-    }
-    return $errors;
 }
