@@ -20,10 +20,6 @@ if (!isset($_GET['id'])) {
 	LEFT JOIN category AS cat ON lot.id_category = cat.id
 	LEFT JOIN bet ON lot.id = bet.id_lot
 	WHERE lot.id = ' . $_GET['id'];
-
-    // $stmt_lot = db_get_prepare_stmt($con, $sql_lot, [$_GET['id']]);
-    // mysqli_stmt_execute($stmt_lot);
-    // $result_lot = mysqli_stmt_get_result($stmt_lot);
     $result_lot = mysqli_query($con, $sql_lot);
     if (!$result_lot) {
         print("Ошибка MySQL: " . mysqli_error($con));
@@ -43,6 +39,7 @@ if (!isset($_GET['id'])) {
                 'limit_time' => $limit_time,
             ]
         );
+        $page_title = $ads['lot_title'];
     }
 
     $layout_content = include_template('layout.php', [

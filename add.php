@@ -77,7 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors['file'] = 'Загрузите картинку в форматах jpg, jpeg, png';
         } else {
             if (!count($errors)) {
-                move_uploaded_file($tmp_name, 'uploads/' . $filename);
+                $filename = 'uploads/' . $filename;
+                move_uploaded_file($tmp_name, $filename);
                 $lot['path'] = $filename;
             }
         }
@@ -87,13 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors)) {
         $page_content = include_template('add-lot.php', ['lot' => $lot, 'errors' => $errors, 'category' => $category]);
     } else {
-        $sql = 'INSERT INTO lot (lot_title, lot_descript, id_category, date_final, lot_price, lot_step, lot_img, date_creation, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 1)';
-        echo json_encode($lot);
-        echo json_encode($sql);
+        $sql = 'INSERT INTO lot (id_category, lot_title, lot_descript, date_final, lot_price, lot_step, lot_img, date_creation, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 1)';
         $stmt = db_get_prepare_stmt($con, $sql, $lot);
-        echo json_encode($stmt);
         $res = mysqli_stmt_execute($stmt);
-        echo json_encode($res);
         if ($res) {
             $lot_id = mysqli_insert_id($con);
             header("Location: lot.php?id=" . $lot_id);
