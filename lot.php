@@ -16,15 +16,11 @@ if (!isset($_GET['id'])) {
     header('HTTP/1.0 404 Not Found');
     exit;
 } else {
-    $sql_lot = 'SELECT lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_final, cat.category_name FROM lot
-	LEFT JOIN category cat ON lot.id_category = cat.id
+    $sql_lot = 'SELECT lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_final, lot.id_category, cat.category_name FROM lot
+	LEFT JOIN category AS cat ON lot.id_category = cat.id
 	LEFT JOIN bet ON lot.id = bet.id_lot
-	WHERE lot.id = ?
-	GROUP BY lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_final, cat.category_name';
-
-    $stmt_lot = db_get_prepare_stmt($con, $sql_lot, [$_GET['id']]);
-    mysqli_stmt_execute($stmt_lot);
-    $result_lot = mysqli_stmt_get_result($stmt_lot);
+	WHERE lot.id = ' . $_GET['id'];
+    $result_lot = mysqli_query($con, $sql_lot);
     if (!$result_lot) {
         print("Ошибка MySQL: " . mysqli_error($con));
     }
@@ -43,6 +39,7 @@ if (!isset($_GET['id'])) {
                 'limit_time' => $limit_time,
             ]
         );
+        $page_title = $ads['lot_title'];
     }
 
     $layout_content = include_template('layout.php', [

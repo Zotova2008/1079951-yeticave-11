@@ -6,6 +6,7 @@
     <title><?= $page_title; ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/flatpickr.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
                     <input type="search" name="search" placeholder="Поиск лота">
                     <input class="main-header__search-btn" type="submit" name="find" value="Найти">
                 </form>
-                <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
+                <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
                 <nav class="user-menu">
 
@@ -54,9 +55,9 @@
         <nav class="nav">
             <ul class="nav__list container">
 
-                <?php foreach ($category as $category) : ?>
+                <?php foreach ($category as $cat) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?= $category['category_name']; ?></a>
+                        <a href="pages/all-lots.html"><?= $cat['category_name']; ?></a>
                     </li>
                 <?php endforeach; ?>
 
