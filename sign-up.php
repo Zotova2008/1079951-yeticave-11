@@ -50,14 +50,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
         } else {
             $password = password_hash($form['password'], PASSWORD_DEFAULT);
-
+            $user['password'] = $password;
             $sql = 'INSERT INTO user_data (user_email, user_password, user_name, user_contact, date_registr) VALUES (?, ?, ?, ?, NOW())';
+
             $stmt = db_get_prepare_stmt($con, $sql, $user);
-            $res_email = mysqli_stmt_execute($stmt);
+            $res = mysqli_stmt_execute($stmt);
         }
 
         if ($res_email && empty($errors)) {
-            header("Location: /index.php");
+            header('Location: /index.php');
             exit();
         }
     }
