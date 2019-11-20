@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if ($res_email && empty($errors)) {
-            header('Location: /index.php');
+            header('Location: /login.php');
             exit();
         }
     }

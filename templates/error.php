@@ -1,1 +1,1 @@
-<h3 style="margin: 50px auto;"><?= $error; ?></h3>
+<h3 style="width: 600px; margin: 50px auto; text-align: center;"><?= $error; ?></h3>

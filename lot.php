@@ -12,7 +12,9 @@ if (!isset($_GET['id'])) {
 	WHERE lot.id = ' . $_GET['id'];
     $result_lot = mysqli_query($con, $sql_lot);
     if (!$result_lot) {
-        print("Ошибка MySQL: " . mysqli_error($con));
+        $error = 'Ошибка MySQL: ' . mysqli_error($con);
+        $page_content = include_template('error.php', ['error' => $error]);
+        http_response_code(404);
     }
 
     $ads = mysqli_fetch_assoc($result_lot);

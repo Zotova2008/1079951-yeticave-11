@@ -1,7 +1,9 @@
 <?php
 require_once('init.php');
 
-if (isset($_SESSION['user_data'])) {
+if (isset($_SESSION['user'])) {
+    $page_content = include_template('error.php', ['error' => 'Вы уже зарегистрировались']);
+    header('Location: /index.php');
     http_response_code(403);
     exit();
 }
@@ -38,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $res_email ? mysqli_fetch_array($res_email, MYSQLI_ASSOC) : null;
 
     if (!count($errors) && $user) {
-        if (password_verify($form['password'], $user['password'])) {
-            $_SESSION['user_data'] = $user;
+        if (password_verify($form['password'], $user['user_password'])) {
+            $_SESSION['user'] = $user;
         } else {
             $errors['password'] = 'Неверный пароль';
         }
@@ -49,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (count($errors)) {
         $page_content = include_template('login.php', ['category' => $category, 'form' => $form, 'errors' => $errors]);
-        if (isset($_SESSION['user_data'])) {
+        if (isset($_SESSION['user'])) {
             header('Location: /index.php');
             exit();
         }

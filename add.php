@@ -1,11 +1,6 @@
 <?php
 require_once('init.php');
 
-if (!isset($_SESSION['user_data'])) {
-    http_response_code(403);
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['lot-name', 'category-id', 'message', 'lot-img', 'lot-rate', 'lot-step', 'lot-date'];
     $errors = [];
@@ -76,18 +71,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $res = mysqli_stmt_execute($stmt);
         if ($res) {
             $lot_id = mysqli_insert_id($con);
-            header("Location: lot.php?id=" . $lot_id);
+            header('Location: lot.php?id=' . $lot_id);
         }
     }
 } else {
     $page_content = include_template('add-lot.php', ['category' => $category]);
 }
 
-if (!isset($_SESSION['user_data'])) {
-    $page_content = include_template('error.php', ['error' => 'Добавить лот могут только зарегистрированные пользователи.']);
-    header('Location: /index.php');
+if (!isset($_SESSION['user'])) {
+    $error = "Только зарегистрированные пользователи могут добавлять лот.<br> Вы будете перенаправлены на страницу входа через 5 секунд.";
+    $page_content = include_template('error.php', ['error' => $error]);
+    header('Refresh: 5; url="/login.php"');
     http_response_code(403);
-    exit();
 }
 
 $layout_content = include_template('layout.php', [
