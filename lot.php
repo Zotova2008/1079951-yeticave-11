@@ -1,16 +1,6 @@
 <?php
 require_once('init.php');
 
-// Отправляем запрос на получение категорий
-$sql_cat = 'SELECT * FROM category';
-$result_cat = mysqli_query($con, $sql_cat);
-// Проверяем получены ли данные
-if ($result_cat) {
-    $category = mysqli_fetch_all($result_cat, MYSQLI_ASSOC);
-} else {
-    print('Ошибка подключения к базе данных: ' . mysqli_error($con));
-}
-
 //Получаем данные лота из БД
 if (!isset($_GET['id'])) {
     header('HTTP/1.0 404 Not Found');

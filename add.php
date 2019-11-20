@@ -1,18 +1,6 @@
 <?php
 require_once('init.php');
 
-// Отправляем запрос на получение категорий
-$cats_ids = [];
-$sql_cat = 'SELECT * FROM category';
-$result_cat = mysqli_query($con, $sql_cat);
-// Проверяем получены ли данные
-if ($result_cat) {
-    $category = mysqli_fetch_all($result_cat, MYSQLI_ASSOC);
-    $cats_ids = array_column($category, 'id');
-} else {
-    print('Ошибка подключения к базе данных: ' . mysqli_error($con));
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $required = ['lot-name', 'category-id', 'message', 'lot-img', 'lot-rate', 'lot-step', 'lot-date'];
     $errors = [];
@@ -53,17 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'lot-step' => 'Шаг ставки',
     ];
 
-    foreach ($lot as $key => $value) {
-        if (isset($rules[$key])) {
-            $rule = $rules[$key];
-            $errors[$key] = $rule($value);
-        }
-
-        if (in_array($key, $required) && empty($value)) {
-            $errors[$key] = "$fields[$key] надо заполнить";
-        }
-    }
-
+    $errors = validatePostData($lot, $rules, $required, $fields);
     $errors = array_filter($errors);
 
     if (!empty($_FILES['lot-img']['name'])) {
