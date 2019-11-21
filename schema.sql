@@ -45,3 +45,7 @@ CREATE UNIQUE INDEX user_email ON user_data(user_email);
 CREATE UNIQUE INDEX symbol_cat ON category(symbol_cat);
 CREATE UNIQUE INDEX category ON category(category_name);
 CREATE INDEX lot_title ON lot(lot_title);
+
+CREATE FULLTEXT INDEX lot_td_search ON lot(lot_title, lot_descript);
+CREATE FULLTEXT INDEX lot_t_search ON lot(lot_title);
+CREATE FULLTEXT INDEX lot_d_search ON lot(lot_descript);
