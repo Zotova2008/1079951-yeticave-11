@@ -66,16 +66,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors)) {
         $page_content = include_template('add-lot.php', ['lot' => $lot, 'errors' => $errors, 'category' => $category]);
     } else {
-        $sql = 'INSERT INTO lot (id_category, lot_title, lot_descript, date_final, lot_price, lot_step, lot_img, date_creation, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 1)';
+        $sql = 'INSERT INTO lot (id_category, lot_title, lot_descript, date_final, lot_price, lot_step, lot_img, date_creation, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), "' . $_SESSION['user']['id'] . '")';
         $stmt = db_get_prepare_stmt($con, $sql, $lot);
         $res = mysqli_stmt_execute($stmt);
         if ($res) {
             $lot_id = mysqli_insert_id($con);
-            header("Location: lot.php?id=" . $lot_id);
+            header('Location: lot.php?id=' . $lot_id);
         }
     }
 } else {
     $page_content = include_template('add-lot.php', ['category' => $category]);
+}
+
+if (!isset($_SESSION['user'])) {
+    $error = "Только зарегистрированные пользователи могут добавлять лот.<br> Вы будете перенаправлены на страницу входа через 5 секунд.";
+    $page_content = include_template('error.php', ['error' => $error]);
+    header('Refresh: 5; url="/login.php"');
+    http_response_code(403);
 }
 
 $layout_content = include_template('layout.php', [

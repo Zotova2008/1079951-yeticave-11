@@ -3,16 +3,20 @@ session_start();
 
 require_once('helpers.php');
 
-$is_auth = 0;
-$user_name = 'Наталья Зотова'; // укажите здесь ваше имя
+// $is_auth = 0;
+// $user_name = 'Наталья Зотова'; // укажите здесь ваше имя
 $page_title = 'YetiCave | Home';
+$is_auth = isset($_SESSION['user']);
+$user_name = (isset($_SESSION['user'])) ? $_SESSION['user']['user_name'] : '';
 $cat_index = 0;
 $limit_time = 1;
 
 // Подключаемся к БД
 $con = mysqli_connect('localhost', 'root', '', 'yeti');
 if (!$con) {
-    print('Ошибка подключения к базе данных: ' . mysqli_connect_error());
+    $error = 'Ошибка подключения к базе данных: ' . mysqli_connect_error();
+    $page_content = include_template('error.php', ['error' => $error]);
+    $categories = 0;
 }
 
 // Устанавливаем кодировку
