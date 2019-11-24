@@ -236,9 +236,30 @@ function validatePostData($form, $rules, $required, $fields)
     }
     return $errors;
 }
+
 function validateEmail($value)
 {
     if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
         return "Введите корректный email";
     }
+}
+
+function format_bet_date($dt)
+{
+    $formattedDate = date_create($dt);
+    $dt_now = date_create("now");
+    $dt_diff = date_diff($dt_now, $formattedDate);
+    $days_count = date_interval_format($dt_diff, "%a");
+    $hours_count = date_interval_format($dt_diff, "%h");
+    $min_count = date_interval_format($dt_diff, "%i");
+    $lastMinWord = get_noun_plural_form((int) $min_count, 'минуту', 'минуты', 'минут');
+    $lastHoursWord = get_noun_plural_form((int) $hours_count, 'час', 'часа', 'часов');
+    if ($days_count === "0") {
+        if ($hours_count === "0") {
+            return ($min_count > 1) ? $min_count . " $lastMinWord назад" : "только что";
+        } else {
+            return  "$hours_count $lastHoursWord, $min_count $lastMinWord назад";
+        }
+    }
+    return date_format($formattedDate, 'd.m.Y в H:i');
 }

@@ -72,7 +72,7 @@ $layout_content = include_template('layout.php', [
     'category' => $category,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
-    'page_title' => 'Новый лот',
+    'page_title' => 'Вход',
 ]);
 
 print($layout_content);
