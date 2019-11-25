@@ -208,7 +208,7 @@ main.container {
   opacity: 0.4;
 }
 
-.main-header__search input[type="search"]:hover + .main-header__search-btn {
+.main-header__search input[type="search"]:hover+.main-header__search-btn {
   opacity: 0.4;
 }
 
@@ -733,6 +733,7 @@ main.container {
 }
 
 .pagination-item-active a {
+  pointer-events: none;
   color: #25434e;
   background-color: rgba(135, 146, 150, 0.1);
 }
@@ -743,6 +744,11 @@ main.container {
 
 .pagination-item-active a:active {
   color: #25434e;
+}
+
+.pagination-no-active a {
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.2);
 }
 
 /* Форма Регистрация + Добавление лота */
@@ -846,7 +852,7 @@ main.container {
   color: #f84646;
 }
 
-input:invalid .form__error{
+input:invalid .form__error {
   display: block;
 }
 
@@ -893,7 +899,8 @@ input:invalid .form__error{
   box-sizing: border-box;
 }
 
-.form__input-file input:active, .form__input-file input:focus {
+.form__input-file input:active,
+.form__input-file input:focus {
   outline: none;
   border-color: #fff;
 }

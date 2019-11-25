@@ -18,7 +18,7 @@
         </div>
         <ul class="lots__list">
 
-            <?php foreach ($ads as $item) : ?>
+            <?php foreach ($lots as $item) : ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
                         <img src="<?= $item['lot_img']; ?>" width="350" height="260" alt="<?= $item['lot_title']; ?>">
@@ -42,4 +42,21 @@
 
         </ul>
     </section>
+
+    <?php if ($pages_count > 1) : ?>
+        <ul class="pagination-list">
+
+            <li class="pagination-item pagination-item-prev <?php if ($page_prev == 0) : ?>pagination-no-active<?php endif; ?>"><a href="/?page=<?= $page_prev; ?>">Назад</a></li>
+
+            <?php foreach ($pages as $page) : ?>
+                <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>">
+                    <a href="/?page=<?= $page; ?>"><?= $page; ?></a>
+                </li>
+            <?php endforeach; ?>
+
+            <li class="pagination-item pagination-item-next <?php if (!$page_next) : ?>pagination-no-active<?php endif; ?>"><a href="/?page=<?= $page_next; ?>">Вперед</a></li>
+
+        </ul>
+    <?php endif; ?>
+
 </main>

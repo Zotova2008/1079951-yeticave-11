@@ -2,6 +2,7 @@
 require_once 'init.php';
 
 $lots = [];
+$lots_page = [];
 $search = $_GET['search'] ?? '';
 
 if ($search) {
@@ -14,11 +15,41 @@ if ($search) {
     $stmt = db_get_prepare_stmt($con, $sql, [$search]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-
     $lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    //Делаем пагинацию
+    $cur_page = $_GET['page'] ?? 1;
+    $page_items = 3;
+    $lots_count = count($lots);
+    $pages_count = ceil($lots_count / $page_items);
+    $offset = ($cur_page - 1) * $page_items;
+    $page_prev = $cur_page - 1;
+
+    if ($cur_page < $pages_count) {
+        $page_next = $cur_page + 1;
+    } else {
+        $page_next = false;
+    }
+
+    $pages = range(1, $pages_count);
+
+    $sql_page = "$sql LIMIT $page_items OFFSET $offset";
+    $stmt_page = db_get_prepare_stmt($con, $sql_page, [$search]);
+    mysqli_stmt_execute($stmt_page);
+    $result_page = mysqli_stmt_get_result($stmt_page);
+    $lots_page = mysqli_fetch_all($result_page, MYSQLI_ASSOC);
 }
 
-$page_content = include_template('search.php', ['category' => $category, 'lots' => $lots, 'search' => $search,]);
+$page_content = include_template('search.php', [
+    'category' => $category,
+    'lots' => $lots_page,
+    'search' => $search,
+    'pages_count' => $pages_count,
+    'page_next' => $page_next,
+    'page_prev' => $page_prev,
+    'pages' => $pages,
+    'cur_page' => $cur_page
+]);
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
