@@ -32,3 +32,6 @@ if ($result_cat) {
 } else {
     print('Ошибка подключения к базе данных: ' . mysqli_error($con));
 }
+
+$cats_ids = [];
+$cats_ids = array_column($category, 'id');

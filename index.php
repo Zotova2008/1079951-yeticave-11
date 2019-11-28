@@ -1,5 +1,6 @@
 <?php
 require_once('init.php');
+require_once('getwinner.php');
 
 $cur_page = $_GET['page'] ?? 1;
 $page_items = 9;
@@ -20,7 +21,7 @@ if ($cur_page < $pages_count) {
 $pages = range(1, $pages_count);
 
 // запрос на показ девяти самых популярных гифок
-$sql = 'SELECT lot.id, lot.lot_title, lot.lot_img, lot.lot_price, lot.date_creation, lot.date_final, cat.category_name FROM lot JOIN category cat ON lot.id_category = cat.id ORDER BY lot.date_creation DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
+$sql = 'SELECT lot.id, lot.lot_title, lot.lot_img, lot.lot_price, lot.date_creation, lot.date_final, cat.category_name FROM lot JOIN category cat ON lot.id_category = cat.id WHERE lot.date_final > NOW() ORDER BY lot.date_creation DESC LIMIT ' . $page_items . ' OFFSET ' . $offset;
 
 // Отправляем запрос на получение карточек лотов
 $result_lot = mysqli_query($con, $sql);

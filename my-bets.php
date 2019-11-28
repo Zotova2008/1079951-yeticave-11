@@ -2,12 +2,14 @@
 require_once('init.php');
 
 if (!isset($_SESSION['user'])) {
+    $error = "Данная страница доступна только зарегистрированным пользователям.";
+    $page_content = include_template('error.php', ['error' => $error]);
+    header('Refresh: 3; url="/"');
     http_response_code(403);
-    exit();
 }
 
 $cur_user_id = $_SESSION['user']['id'];
-$sql = "SELECT lot.id, lot.lot_title, lot.lot_img, cat.category_name, MAX(bet.bet_sum) AS bet_price,
+$sql = "SELECT lot.id, lot.lot_title, lot.lot_img, lot.id_user_winner, cat.category_name, MAX(bet.bet_sum) AS bet_price,
 MAX(bet.bet_time) AS bet_time, MAX(DATE_FORMAT(bet.bet_time, '%d.%m.%y %H:%i')) AS time_format, lot.date_final, user_data.user_email, user_data.user_contact
 FROM bet LEFT JOIN lot ON bet.id_lot = lot.id
 LEFT JOIN category AS cat ON lot.id_category = cat.id
@@ -22,11 +24,11 @@ if (!$result) {
     $page_content = include_template('error.php', ['error' => $error]);
 }
 
-$lots = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 $page_content = include_template(
     'my-bets.php',
-    ['category' => $category, 'lots' => $lots]
+    ['category' => $category, 'bets' => $bets, 'cur_user_id' => $cur_user_id]
 );
 
 $layout_content = include_template('layout.php', [

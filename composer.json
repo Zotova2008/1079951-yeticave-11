@@ -1,0 +1,14 @@
+{
+    "name": "kitti/yeti",
+    "authors": [
+        {
+            "name": "Natali",
+            "email": "n.z.work@yandex.ru"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2",
+        "wixel/gump": "^1.5",
+        "squizlabs/php_codesniffer": "^3.5"
+    }
+}

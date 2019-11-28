@@ -3,7 +3,7 @@ require_once('init.php');
 
 if (isset($_SESSION['user'])) {
     $page_content = include_template('error.php', ['error' => 'Вы уже зарегистрировались']);
-    header('Location: /index.php');
+    header('Location: index.php');
     http_response_code(403);
     exit();
 }
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
         $page_content = include_template('login.php', ['category' => $category, 'form' => $form, 'errors' => $errors]);
         if (isset($_SESSION['user'])) {
-            header('Location: /index.php');
+            header('Location: index.php');
             exit();
         }
     } else {
-        header('Location: /index.php');
+        header('Location: index.php');
         exit();
     }
 } else {

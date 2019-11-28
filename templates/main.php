@@ -6,7 +6,7 @@
 
             <?php foreach ($category as $cat) : ?>
                 <li class="promo__item promo__item--<?= $cat['symbol_cat']; ?>">
-                    <a class="promo__link" href="pages/all-lots.html"><?= $cat['category_name']; ?></a>
+                    <a class="promo__link" href="category.php?id=<?= $cat['id'] ?>"><?= $cat['category_name']; ?></a>
                 </li>
             <?php endforeach; ?>
 
@@ -46,15 +46,15 @@
     <?php if ($pages_count > 1) : ?>
         <ul class="pagination-list">
 
-            <li class="pagination-item pagination-item-prev <?php if ($page_prev == 0) : ?>pagination-no-active<?php endif; ?>"><a href="/?page=<?= $page_prev; ?>">Назад</a></li>
+            <li class="pagination-item pagination-item-prev <?php if ($page_prev == 0) : ?>pagination-no-active<?php endif; ?>"><a href="index.php?page=<?= $page_prev; ?>">Назад</a></li>
 
             <?php foreach ($pages as $page) : ?>
                 <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>">
-                    <a href="/?page=<?= $page; ?>"><?= $page; ?></a>
+                    <a href="index.php?page=<?= $page; ?>"><?= $page; ?></a>
                 </li>
             <?php endforeach; ?>
 
-            <li class="pagination-item pagination-item-next <?php if (!$page_next) : ?>pagination-no-active<?php endif; ?>"><a href="/?page=<?= $page_next; ?>">Вперед</a></li>
+            <li class="pagination-item pagination-item-next <?php if (!$page_next) : ?>pagination-no-active<?php endif; ?>"><a href="index.php?page=<?= $page_next; ?>">Вперед</a></li>
 
         </ul>
     <?php endif; ?>

@@ -4,7 +4,7 @@
 
                 <?php foreach ($category as $cat) : ?>
                     <li class="nav__item">
-                        <a href="pages/all-lots.html"><?= $cat['category_name']; ?></a>
+                        <a href="category.php?id=<?= $cat['id'] ?>"><?= $cat['category_name']; ?></a>
                     </li>
                 <?php endforeach; ?>
 

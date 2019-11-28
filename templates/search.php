@@ -3,7 +3,7 @@
           <ul class="nav__list container">
               <?php foreach ($category as $cat) : ?>
                   <li class="nav__item">
-                      <a href="pages/all-lots.html"><?= $cat['category_name']; ?></a>
+                      <a href="category.php?id=<?= $cat['id'] ?>"><?= $cat['category_name']; ?></a>
                   </li>
               <?php endforeach; ?>
           </ul>
@@ -42,15 +42,15 @@
           <?php if ($pages_count > 1) : ?>
               <ul class="pagination-list">
 
-                  <li class="pagination-item pagination-item-prev <?php if ($page_prev == 0) : ?>pagination-no-active<?php endif; ?>"><a href="../search.php?search=<?= $search ?>&page=<?= $page_prev; ?>">Назад</a></li>
+                  <li class="pagination-item pagination-item-prev <?php if ($page_prev == 0) : ?>pagination-no-active<?php endif; ?>"><a href="search.php?search=<?= $search ?>&page=<?= $page_prev; ?>">Назад</a></li>
 
                   <?php foreach ($pages as $page) : ?>
                       <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>">
-                          <a href="../search.php?search=<?= $search ?>&page=<?= $page; ?>"><?= $page; ?></a>
+                          <a href="search.php?search=<?= $search ?>&page=<?= $page; ?>"><?= $page; ?></a>
                       </li>
                   <?php endforeach; ?>
 
-                  <li class="pagination-item pagination-item-next <?php if (!$page_next) : ?>pagination-no-active<?php endif; ?>"><a href="../search.php?search=<?= $search ?>&page=<?= $page_next; ?>">Вперед</a></li>
+                  <li class="pagination-item pagination-item-next <?php if (!$page_next) : ?>pagination-no-active<?php endif; ?>"><a href="search.php?search=<?= $search ?>&page=<?= $page_next; ?>">Вперед</a></li>
 
               </ul>
           <?php endif; ?>

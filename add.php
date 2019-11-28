@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (!isset($_SESSION['user'])) {
     $error = "Только зарегистрированные пользователи могут добавлять лот.<br> Вы будете перенаправлены на страницу входа через 5 секунд.";
     $page_content = include_template('error.php', ['error' => $error]);
-    header('Refresh: 5; url="/login.php"');
+    header('Refresh: 5; url="login.php"');
     http_response_code(403);
 }
 
