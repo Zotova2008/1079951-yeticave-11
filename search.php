@@ -3,9 +3,9 @@ require_once 'init.php';
 
 $lots = [];
 $lots_page = [];
-$search = $_GET['search'] ?? '';
+$search = trim($_GET['search']) ?? '';
 
-if ($search) {
+if ($search == !'') {
     $sql = 'SELECT lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_creation, lot.date_final, lot.id_category, cat.category_name FROM lot
 	LEFT JOIN category AS cat ON lot.id_category = cat.id
 	LEFT JOIN bet ON lot.id = bet.id_lot
@@ -38,18 +38,26 @@ if ($search) {
     mysqli_stmt_execute($stmt_page);
     $result_page = mysqli_stmt_get_result($stmt_page);
     $lots_page = mysqli_fetch_all($result_page, MYSQLI_ASSOC);
-}
 
-$page_content = include_template('search.php', [
-    'category' => $category,
-    'lots' => $lots_page,
-    'search' => $search,
-    'pages_count' => $pages_count,
-    'page_next' => $page_next,
-    'page_prev' => $page_prev,
-    'pages' => $pages,
-    'cur_page' => $cur_page
-]);
+    if ($pages_count <= 0) {
+        $error = "Ничего не найдено по вашему запросу.";
+        $page_content = include_template('error.php', ['error' => $error]);
+    } else {
+        $page_content = include_template('search.php', [
+            'category' => $category,
+            'lots' => $lots_page,
+            'search' => $search,
+            'pages_count' => $pages_count,
+            'page_next' => $page_next,
+            'page_prev' => $page_prev,
+            'pages' => $pages,
+            'cur_page' => $cur_page
+        ]);
+    }
+} else {
+    $error = "Введите поисковой запрос";
+    $page_content = include_template('error.php', ['error' => $error]);
+}
 
 $layout_content = include_template('layout.php', [
     'content' => $page_content,
