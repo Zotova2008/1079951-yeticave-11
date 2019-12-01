@@ -3,9 +3,9 @@ require_once 'init.php';
 
 $lots = [];
 $lots_page = [];
-$search = trim($_GET['search']) ?? '';
+$search = trim($_GET['search']);
 
-if ($search == !'') {
+if ($search) {
     $sql = 'SELECT lot.id, lot.lot_title, lot.lot_descript, lot.lot_img, lot.lot_price, lot.lot_step, lot.date_creation, lot.date_final, lot.id_category, cat.category_name FROM lot
 	LEFT JOIN category AS cat ON lot.id_category = cat.id
 	LEFT JOIN bet ON lot.id = bet.id_lot
