@@ -71,7 +71,6 @@ function db_get_prepare_stmt($link, $sql, $data = [])
             die($errorMsg);
         }
     }
-
     return $stmt;
 }
 
@@ -125,6 +124,7 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
  * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент
  * @param string $name Путь к файлу шаблона относительно папки templates
  * @param array $data Ассоциативный массив с данными для шаблона
+ *
  * @return string Итоговый HTML
  */
 function include_template($name, array $data = [])
@@ -145,7 +145,12 @@ function include_template($name, array $data = [])
     return $result;
 }
 
-
+/**
+ * Функция форматирования цены
+ * @param string $num цена
+ *
+ * @return string отформатированная цена
+ */
 function format_amount($num)
 {
     $res = ceil($num);
@@ -156,6 +161,12 @@ function format_amount($num)
     return $res;
 };
 
+/**
+ * Функция определения прошедшего времени с указанной даты
+ * @param string $time дата
+ *
+ * @return string сколько прошло времени с указанной даты
+ */
 function get_time($time)
 {
     $computation = strtotime($time) - time();
@@ -172,20 +183,40 @@ function get_time($time)
     return [$hours, $minutes];
 };
 
+/**
+ * Функция получения значения из параметра пост-запроса
+ * @param string $name строка с наименованием параметра пост-запроса
+ *
+ * @return string значение параметра пост-запроса
+ */
 function getPostVal($name)
 {
     return filter_input(INPUT_POST, $name);
 }
 
+/**
+ * Функция валидации категории
+ * @param string $id id переданной категории
+ * @param array $allowed_list массив, из которого будут выбираться категории
+ *
+ * @return string текст ошибки валидации
+ */
 function validateCategory($id, $allowed_list)
 {
     if (!in_array($id, $allowed_list)) {
         return "Выберите категорию";
     }
-
     return null;
 }
 
+/**
+ * Функция валидации длины поля
+ * @param string $value значения поля
+ * @param int $min минимальная длина поля
+ * @param int $max максимальная длина поля
+ *
+ * @return string текст ошибки валидации
+ */
 function validateLength($value, $min, $max)
 {
     if ($value) {
@@ -194,10 +225,15 @@ function validateLength($value, $min, $max)
             return "Значение должно быть от $min до $max символов";
         }
     }
-
     return null;
 }
 
+/**
+ * Функция валидации цены лота при его добавлении
+ * @param string $value значения поля
+ *
+ * @return string текст ошибки валидации
+ */
 function validatePrice($value)
 {
     if ((float) $value < 0) {
@@ -206,6 +242,12 @@ function validatePrice($value)
     return null;
 }
 
+/**
+ * Функция валидации шага лота
+ * @param string $value значения поля
+ *
+ * @return string текст ошибки валидации
+ */
 function validateStep($value)
 {
     if ((int) $value < 0) {
@@ -214,6 +256,12 @@ function validateStep($value)
     return null;
 }
 
+/**
+ * Функция валидации даты закрытия лота
+ * @param string $value значения поля
+ *
+ * @return string текст ошибки валидации
+ */
 function validateDate($value)
 {
     $future_dt = date('Y-m-d', strtotime("+1 days"));
@@ -223,6 +271,15 @@ function validateDate($value)
     return null;
 }
 
+/**
+ * Функция валидации данных, отправленных из формы
+ * @param array $form данные из формы в пост-запросе
+ * @param array $rules массив с правилами валидации
+ * @param array $required массив с полями формы
+ * @param array $fields словарь с подписями полей
+ *
+ * @return array массив с ошибками валидации
+ */
 function validatePostData($form, $rules, $required, $fields)
 {
     foreach ($form as $key => $value) {
@@ -237,6 +294,12 @@ function validatePostData($form, $rules, $required, $fields)
     return $errors;
 }
 
+/**
+ * Функция валидации e-mail
+ * @param string $value значения поля e-mail
+ *
+ * @return string текст ошибки валидации
+ */
 function validateEmail($value)
 {
     if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -244,6 +307,15 @@ function validateEmail($value)
     }
 }
 
+/**
+ * Функция форматирует дату ставки
+ * если переданная дата меньше одного дня, то возвращается строка вида "4 часа 15 минут назад"
+ * если переданная дата меньше одного часа, то возвращается строка вида "15 минут назад"
+ * в остальных случаях возвращается дата в вида "21.11.2019 в 13:04"
+ * @param string $dt дата
+ *
+ * @return string отформатированная дата
+ */
 function format_bet_date($dt)
 {
     $formattedDate = date_create($dt);
@@ -252,8 +324,8 @@ function format_bet_date($dt)
     $days_count = date_interval_format($dt_diff, "%a");
     $hours_count = date_interval_format($dt_diff, "%h");
     $min_count = date_interval_format($dt_diff, "%i");
-    $lastMinWord = get_noun_plural_form((int) $min_count, 'минуту', 'минуты', 'минут');
-    $lastHoursWord = get_noun_plural_form((int) $hours_count, 'час', 'часа', 'часов');
+    $lastMinWord = get_noun_plural_form((int) $min_count, "минуту", "минуты", "минут");
+    $lastHoursWord = get_noun_plural_form((int) $hours_count, "час", "часа", "часов");
     if ($days_count === "0") {
         if ($hours_count === "0") {
             return ($min_count > 1) ? $min_count . " $lastMinWord назад" : "только что";
@@ -261,5 +333,5 @@ function format_bet_date($dt)
             return  "$hours_count $lastHoursWord, $min_count $lastMinWord назад";
         }
     }
-    return date_format($formattedDate, 'd.m.Y в H:i');
+    return date_format($formattedDate, "d.m.Y в H:i");
 }
